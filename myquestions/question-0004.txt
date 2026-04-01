@@ -1,0 +1,31 @@
+# Reto Técnico: Optimización de Abastecimiento Global para Síntesis de Polímeros
+
+## Contexto
+Una planta de síntesis de polímeros de alto rendimiento en Colombia busca optimizar la compra de monómeros y catalizadores. La empresa debe elegir entre proveedores nacionales e internacionales (Asia, Europa y América). 
+
+El éxito de la polimerización depende de la pureza de los reactivos, pero el costo final se ve afectado por aranceles, fletes y la huella de carbono asociada a la distancia. La empresa tiene una política de sostenibilidad que otorga un "bono" de preferencia a los productos nacionales o de países limítrofes.
+
+## Objetivo
+Desarrollar una función en Python llamada `seleccionar_mejor_proveedor` que prediga un **Índice de Viabilidad (IV)** para cada proveedor y recomiende la mejor opción de compra.
+
+## Requerimientos de la función
+
+### 1. Entrada
+Un DataFrame de `pandas` con las columnas: 
+`['id_proveedor', 'pais_origen', 'precio_unitario_usd', 'pureza_reactivo', 'costo_envio_usd', 'distancia_km', 'tiempo_entrega_dias']`.
+
+### 2. Procesamiento
+* **Ingeniería de Características (Numpy):** Crear una columna `costo_total_real` que sea la suma del precio y el envío, ajustada por un **Factor de Cercanía ($FC$)**:
+    $$FC = 1 + \log_{10}(\text{distancia\_km} + 1)$$
+    $$\text{Costo\_Ajustado} = \text{costo\_total\_real} \times FC$$
+* **Modelado (Sklearn):** Utilizar un modelo de `GradientBoostingRegressor` o `RandomForestRegressor` para predecir el `Indice_Viabilidad` (proporcionado en los datos de entrenamiento).
+* **Escalamiento:** Aplicar `MinMaxScaler` a las variables numéricas antes de entrenar.
+
+### 3. Salida
+La función debe retornar un diccionario con:
+1. El `id_proveedor` con el Índice de Viabilidad más alto.
+2. El ahorro estimado si se elige el proveedor nacional más cercano frente al mejor internacional.
+
+## Restricciones técnicas
+1. Si el `pais_origen` es "Colombia", el `costo_envio_usd` debe reducirse un 15% automáticamente antes del cálculo (beneficio por logística local).
+2. Eliminar cualquier registro donde la `pureza_reactivo` sea inferior al 95%, ya que compromete la síntesis del polímero.
