@@ -1,0 +1,31 @@
+# Reto Técnico: Clasificación Estructural de Biomoléculas mediante Momentos de Inercia y Secuenciación
+
+## Contexto
+En el estudio de la biofísica molecular, la función de una proteína está íntimamente ligada a su estructura tridimensional (forma) y a su secuencia de aminoácidos. Una base de datos consolidada contiene información sobre el **radio de giro**, los **momentos principales de inercia** (que definen si la molécula es esférica, alargada o achatada) y el **largo de su secuencia**.
+
+El objetivo es automatizar la clasificación de nuevas muestras en tres categorías: **Proteínas Fibrosas**, **Proteínas Globulares** o **Complejos de Membrana**.
+
+## Objetivo
+Desarrollar una función en Python llamada `clasificar_biomoleculas` que entrene un modelo de **Bosques Aleatorios (Random Forest)** para categorizar moléculas y asigne un nombre sistemático basado en su predicción.
+
+## Requerimientos de la función
+
+### 1. Entrada
+Un DataFrame de `pandas` con las columnas: 
+`['id_molecula', 'masa_daltons', 'radio_giro_nm', 'momento_x', 'momento_y', 'momento_z', 'longitud_secuencia', 'clase_real']`.
+
+### 2. Procesamiento
+* **Ingeniería de Características:** Usar `numpy` para calcular el **Parámetro de Asimetría ($A$)**, definido simplificadamente como:
+    $$A = \frac{(momento\_x - momento\_y)^2 + (momento\_y - momento\_z)^2 + (momento\_z - momento\_x)^2}{(momento\_x + momento\_y + momento\_z)^2}$$
+* **Modelado:** Utilizar `RandomForestClassifier` de `sklearn`.
+* **Validación:** Dividir el dataset en 75% entrenamiento y 25% prueba.
+
+### 3. Salida
+La función debe retornar un nuevo DataFrame que incluya:
+1. La clase predicha por el modelo.
+2. Una columna `nombre_sistema` que concatene el `id_molecula` con la clase (ej: "MOL_102-Globular").
+3. El **Accuracy Score** (precisión global) del modelo en el conjunto de prueba.
+
+## Restricciones técnicas
+1. Utilizar `LabelEncoder` de `sklearn` para convertir las etiquetas de texto (`clase_real`) a números antes del entrenamiento.
+2. El código debe manejar la limpieza de datos (eliminar filas con valores de momentos negativos o nulos).
