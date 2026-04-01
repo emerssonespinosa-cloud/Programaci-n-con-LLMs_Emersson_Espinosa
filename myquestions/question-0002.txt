@@ -1,0 +1,30 @@
+# Reto Técnico: Clasificación y Segmentación de Clientes de Acero (B2B vs B2C)
+
+## Contexto
+Una distribuidora metalúrgica en el sector de la construcción maneja un catálogo de diversos metales (vigas de acero al carbono, láminas galvanizadas, acero inoxidable). La empresa recibe cientos de pedidos mensuales y necesita clasificar automáticamente a sus clientes en dos modalidades:
+
+* **B2B (Business to Business):** Empresas constructoras o fábricas (pocos pedidos, pero de gran volumen y tonelaje).
+* **B2C (Business to Consumer):** Pequeños contratistas o clientes finales (muchos pedidos, volumen bajo).
+
+## Objetivo
+Desarrollar una función en Python llamada `segmentar_y_calificar_clientes` que clasifique a los clientes y encuentre al "Mejor Cliente" (Top Performer) en cada categoría basándose en un **Score de Valor**.
+
+## Requerimientos de la función
+
+### 1. Entrada
+Un DataFrame de `pandas` con las columnas: 
+`['id_cliente', 'tipo_metal', 'toneladas_pedidas', 'frecuencia_compra_mes', 'valor_contrato_usd']`.
+
+### 2. Procesamiento
+* **Clasificación (Machine Learning):** Usar `KMeans` de `sklearn` con $k=2$ para agrupar a los clientes basándose en `toneladas_pedidas` y `frecuencia_compra_mes`. (Debes identificar cuál cluster corresponde a B2B y cuál a B2C analizando los centroides).
+* **Cálculo de Score:** Usar `numpy` para crear una columna `score_valor` que sea el producto de:
+    $$\text{score\_valor} = \text{valor\_contrato\_usd} \times \text{toneladas\_pedidas}$$
+
+### 3. Salida
+Un diccionario con la siguiente estructura:
+```python
+{
+    'B2B_top_cliente': id_del_cliente,
+    'B2C_top_cliente': id_del_cliente,
+    'centroides': [lista_de_centroides]
+}
