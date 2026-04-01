@@ -1,24 +1,18 @@
-El Desafío: Proyección de Cosecha Semanal para Exportación
-Contexto:
-Una exportadora de Gulupa (Passiflora edulis f. edulis) en Antioquia necesita predecir cuántos kilogramos de fruta de "Calidad Grado A" se recolectarán en la próxima semana. Esto es vital para reservar el espacio de carga aérea y cumplir con los contratos en Europa.
+# El Desafío: Proyección de Cosecha Semanal para Exportación
+
+## Contexto
+Una exportadora de **Gulupa (Passiflora edulis f. edulis)** en Antioquia necesita predecir cuántos kilogramos de fruta de "Calidad Grado A" se recolectarán en la próxima semana. Esto es vital para reservar el espacio de carga aérea y cumplir con los contratos en Europa.
 
 Se ha determinado que la cosecha depende principalmente de:
+* La **temperatura promedio** de las últimas dos semanas.
+* La **humedad relativa**.
+* El **índice de precipitación** acumulada.
+* La **edad del cultivo** (en semanas desde la siembra).
 
-La temperatura promedio de las últimas dos semanas.
+## La Tarea
+Desarrolla una función en Python llamada `predecir_cosecha_gulupa` que reciba un DataFrame con datos históricos y un array con las condiciones climáticas actuales, y retorne la proyección de producción utilizando un modelo de **Regresión Lineal**.
 
-La humedad relativa.
-
-El índice de precipitación acumulada.
-
-La edad del cultivo (en semanas desde la siembra).
-
-La Tarea
-Desarrolla una función en Python llamada predecir_cosecha_gulupa que reciba un DataFrame con datos históricos y un array con las condiciones climáticas actuales, y retorne la proyección de producción utilizando un modelo de Regresión Lineal.
-
-Requisitos técnicos:
-
-Pandas: Para la manipulación de la estructura de datos.
-
-NumPy: Para el manejo de arreglos y transformaciones.
-
-Scikit-Learn: Para el entrenamiento del modelo (LinearRegression) y la separación de datos (train_test_split).
+## Requisitos técnicos
+* **Pandas:** Para la manipulación de la estructura de datos.
+* **NumPy:** Para el manejo de arreglos y transformaciones.
+* **Scikit-Learn:** Para el entrenamiento del modelo (`LinearRegression`) y la separación de datos (`train_test_split`).
