@@ -62,29 +62,6 @@ def generar_caso_de_uso_evaluar_modelo():
         'target': 'clase_real'
     }
 
-    # 4. Definir el Output esperado (Simulación del procesamiento)
-    # Calculamos el parámetro de asimetría A usando Numpy
+    # 4. Definir el Output esperado
     m_x, m_y, m_z = df_input['momento_x'], df_input['momento_y'], df_input['momento_z']
-    numerador = (m_x - m_y)**2 + (m_y - m_z)**2 + (m_z - m_x)**2
-    denominador = (m_x + m_y + m_z)**2
-    df_input['indice_asimetria'] = numerador / denominador
-    
-    # Codificamos la clase real para el entrenamiento
-    le = LabelEncoder()
-    y_encoded = le.fit_transform(df_input['clase_real'])
-    
-    output = {
-        'df_procesado': df_input,
-        'target_vector': y_encoded,
-        'clases_mapeadas': dict(zip(le.classes_, le.transform(le.classes_)))
-    }
-
-    return input_dict, output
-
-# --- Prueba del generador ---
-if __name__ == "__main__":
-    entrada, salida = generar_caso_de_uso_preparar_datos()
-    print(f"Generadas {len(entrada['dataset'])} biomoléculas.")
-    print(f"Mapeo de clases: {salida['clases_mapeadas']}")
-    print("\nPrimeras filas del dataset sintético:")
-    print(entrada['dataset'][['id_molecula', 'clase_real']].head())
+    numerador =
