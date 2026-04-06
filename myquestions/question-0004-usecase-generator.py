@@ -15,7 +15,7 @@ def generar_caso_de_uso_optimizar_proveedores():
     origenes = np.random.choice(paises, n_proveedores, p = [0.3, 0.2, 0.2, 0.2, 0.1])
     
     precios = np.random.uniform(500, 2000, n_proveedores)
-    purezas = np.random.uniform(90, 99.9, n_proveedores) # Algunos caerán bajo el 95%
+    purezas = np.random.uniform(90, 99.9, n_proveedores) 
     
     # Lógica de distancia y envío basada en el origen
     distancias = []
@@ -59,26 +59,27 @@ def generar_caso_de_uso_optimizar_proveedores():
         df_valid['costo_envio_usd']
     )
     
-    # Cálculo del factor de cercanía y costo ajustado
+    # Cálculo del factor de cercanía (FC) y costo ajustado
     df_valid['FC'] = 1 + np.log10(df_valid['distancia_km'] + 1)
     df_valid['costo_total_ajustado'] = (df_valid['precio_unitario_usd'] + df_valid['envio_final']) * df_valid['FC']
     
-    # El mejor proveedor será el de menor costo ajustado y mayor pureza (simplificado para el test)
-    # Creamos un score de viabilidad sintético para el output
+    # Índice de Viabilidad (IV): Relación pureza/costo
     df_valid['IV'] = (df_valid['pureza_reactivo'] * 10) / df_valid['costo_total_ajustado']
     mejor_id = df_valid.loc[df_valid['IV'].idxmax(), 'id_proveedor']
     
     output = {
         'mejor_proveedor_id': mejor_id,
-        'n_proveedores_aptos': len(df_valid),
-        'promedio_pureza_apta': df_valid['pureza_reactivo'].mean()
+        'n_proveedores_aptos': int(len(df_valid)),
+        'promedio_pureza_apta': float(df_valid['pureza_reactivo'].mean())
     }
 
     return input_dict, output
 
-# --- Ejemplo de ejecución ---
+# --- Ejemplo de ejecución (Corregido para este archivo específico) ---
 if __name__ == "__main__":
-    params, resultados = generar_caso_de_uso_preparar_datos()
+    # Importante: Aquí se llama a la función de este archivo
+    params, resultados = generar_caso_de_uso_optimizar_proveedores()
     print(f"Total proveedores analizados: {len(params['dataset'])}")
     print(f"Proveedores que cumplen calidad (>95%): {resultados['n_proveedores_aptos']}")
     print(f"Ganador de la licitación: {resultados['mejor_proveedor_id']}")
+    print(f"Pureza promedio de aptos: {resultados['promedio_pureza_apta']:.2f}%")
