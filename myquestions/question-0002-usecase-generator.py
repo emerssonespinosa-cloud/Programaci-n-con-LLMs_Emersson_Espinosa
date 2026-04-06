@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def generar_caso_de_uso_preparar_datos():
+def generar_caso_de_uso_entrenar_modelo():
     """
     Genera casos de prueba aleatorios para la segmentación de clientes de acero.
     Crea dos grupos: B2B (grandes toneladas, baja frecuencia) y 
