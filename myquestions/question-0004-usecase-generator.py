@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def generar_caso_de_uso_preparar_datos():
+def generar_caso_de_uso_optimizar_proveedores():
     """
     Genera casos de prueba aleatorios para la optimización de proveedores 
     de materia prima en la síntesis de polímeros.
