@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 
-def generar_caso_de_uso_preparar_datos():
+def generar_caso_de_uso_evaluar_modelo():
     """
     Genera datos sintéticos de biomoléculas basados en tensores de inercia 
     y geometría espacial para clasificación estructural.
