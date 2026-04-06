@@ -62,7 +62,7 @@ def generar_caso_de_uso_entrenar_modelo():
 
 # --- Ejemplo de validación del generador ---
 if __name__ == "__main__":
-    params, resultados = generar_caso_de_uso_preparar_datos()
+    params, resultados = generar_caso_de_uso_entrenar_modelo()
     print(f"Dataset generado con {len(params['dataset'])} clientes.")
     print(f"Mejor cliente B2B esperado: {resultados['B2B_top_cliente']}")
     print(f"Mejor cliente B2C esperado: {resultados['B2C_top_cliente']}")
