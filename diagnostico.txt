@@ -1,0 +1,35 @@
+# Diagnóstico - Entrega 2 LLMs
+
+## Resultado actual del autocorrector
+- 0098 ✓ output matches (resuelto)
+- 0145 ✓ output matches
+- 0219 ✓ output matches
+- 0516 ✗ usecase generator error
+
+## Resumen por caso
+
+### answer-0098.py - RESUELTO ✓
+El generador de casos de uso (RebeBg - Rebeca Bedoya) tenía un bug: la función
+solución estaba definida antes que la función generadora, por lo que el
+autocorrector llamaba predecir_dificultad() sin argumentos en lugar de llamar
+generar_caso_de_uso_predecir_dificultad(). Se contactó a Rebeca Bedoya, quien
+corrigió el orden de las funciones en su generador. Tras la corrección, mi
+solución pasó exitosamente.
+
+### answer-0516.py - PENDIENTE ✗
+El generador de casos de uso (santiagoparra0603 - Santiago Parra) tiene el mismo
+bug: clasificar_congestion() está definida antes que
+generar_caso_de_uso_clasificar_congestion(), causando el error:
+  "clasificar_congestion() missing 2 required positional arguments: 'df' and 'target_col'"
+
+Se contactó a Santiago Parra para informarle del problema, pero no hubo respuesta.
+El error está confirmado en el generador del compañero, no en mi solución, como
+evidencia el hecho de que los otros 3 casos (0098, 0145, 0219) pasan correctamente.
+
+Mi solución para clasificar_congestion está implementada correctamente con:
+- Validación cruzada estratificada (StratifiedKFold)
+- Imputación con SimpleImputer(strategy='mean')
+- Escalado con StandardScaler
+- Clasificación con GradientBoostingClassifier
+- Manejo de clases desbalanceadas con compute_class_weight
+- Métricas: precision, recall, f1 y roc_auc
