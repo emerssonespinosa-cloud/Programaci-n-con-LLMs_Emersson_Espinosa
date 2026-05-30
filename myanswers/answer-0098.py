@@ -6,23 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 
-# --- 1. Generador del Caso de Uso ---
-def generar_caso_de_uso_predecir_dificultad():
-    n_rows = random.randint(20, 50)  # Aumentamos un poco el tamaño para mejor entrenamiento
-    n_features = 3
-    data = np.random.randn(n_rows, n_features)
-    df = pd.DataFrame(data, columns=['calorias', 'tiempo_prep_min', 'num_ingredientes'])
-    
-    # Introducir NaNs aleatorios
-    mask = np.random.choice([True, False], size=df.shape, p=[0.2, 0.8])
-    df[mask] = np.nan
-    
-    # Crear columna target (dificultad: 0 o 1)
-    df['dificultad'] = np.random.randint(0, 2, size=n_rows)
-    
-    return {'df': df, 'target_col': 'dificultad'}
-
-# --- 2. Solución: Función predecir_dificultad ---
+# --- 1. SOLUCIÓN ---
 def predecir_dificultad(df, target_col):
     # Separar X e y
     X = df.drop(columns=[target_col])
@@ -44,7 +28,7 @@ def predecir_dificultad(df, target_col):
     # Predecir
     y_pred = clf.predict(X_test)
     
-    # Calcular correctas e incorrectas usando numpy
+    # Calcular correctas e incorrectas
     correctas = np.sum(y_pred == y_test)
     incorrectas = np.sum(y_pred != y_test)
     
@@ -57,15 +41,28 @@ def predecir_dificultad(df, target_col):
         'incorrectas': int(incorrectas)
     }
 
+# --- 2. GENERADOR (Estructura necesaria para el corrector) ---
+def generar_caso_de_uso_predecir_dificultad():
+    n_rows = 30
+    n_features = 3
+    data = np.random.randn(n_rows, n_features)
+    df = pd.DataFrame(data, columns=['calorias', 'tiempo_prep_min', 'num_ingredientes'])
+    
+    # Introducir NaNs
+    mask = np.random.choice([True, False], size=df.shape, p=[0.2, 0.8])
+    df[mask] = np.nan
+    
+    # Columna target
+    df['dificultad'] = np.random.randint(0, 2, size=n_rows)
+    
+    input_data = {'df': df, 'target_col': 'dificultad'}
+    # El corrector espera el input y el resultado esperado
+    expected_output = predecir_dificultad(df, 'dificultad')
+    
+    return input_data, expected_output
+
 # --- 3. Ejecución ---
 if __name__ == "__main__":
-    # Generar caso
-    caso = generar_caso_de_uso_predecir_dificultad()
-    
-    # Ejecutar solución
-    resultado = predecir_dificultad(caso['df'], caso['target_col'])
-    
-    print("--- Resultado del Análisis de Recetas ---")
-    print(f"Diccionario de resultados: {resultado}")
-    print(f"\nResumen: Se obtuvieron {resultado['correctas']} predicciones correctas "
-          f"y {resultado['incorrectas']} incorrectas.")
+    input_data, _ = generar_caso_de_uso_predecir_dificultad()
+    resultado = predecir_dificultad(input_data['df'], input_data['target_col'])
+    print(resultado)
